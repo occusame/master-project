@@ -15,7 +15,7 @@ read_maf_from_gz <- function(gz_file) {
   close(sam)
   return(maf_text)
 }
-main_directory <- 'd:/master project/portal samples data/prostate gland/'
+main_directory <- 'd:/master project/portal samples data/colon/'
 setwd(main_directory)
 hla.df <- data.frame()
 names <- list.files(main_directory, full.names = TRUE)
@@ -39,7 +39,7 @@ for (i in 1:num) {
     select <- cbind(select[, 1:5], QUAL = '50', FILTER = 'PASS', INFO = select$INFO, FORMAT = 'GT:', barcode = '0/1:')
     hla.df <- list.df[list.df$aliquot_id %in% maf_text$Tumor_Sample_Barcode,]
     hla.df <- hla.df[!duplicated(hla.df$aliquot_id),]
-    hlaoutput <- file.path('d:/master project/HLA detailed/', paste("prostate_hla_case",i,".txt", sep = "_"))
+    hlaoutput <- file.path('d:/master project/HLA detailed/', paste("colon_hla_case",i,".txt", sep = "_"))
     write.table(hla.df,file = hlaoutput,sep = '\t',quote = FALSE,col.names = FALSE,row.names = FALSE,append = TRUE)
     select$FORMAT <- paste0(select$FORMAT, select$Allele)
     select$barcode <- paste0(select$barcode, select$Allele)
@@ -48,7 +48,7 @@ for (i in 1:num) {
     barcode_name <- gsub("/$", "", barcode_name)
     names(select)[which(names(select) == "barcode")] <- barcode_name
     names(select)[1:5] <- c('#CHROM', 'POS', 'ID', 'REF', 'ALT')
-    output_folder <- 'd:/master project/VCF/prostate'
+    output_folder <- 'd:/master project/VCF/colon'
     output_file <- file.path(output_folder, paste0(barcode_name, ".vcf"))
     writeLines('##fileformat=VCFv4.2', output_file)
     write.table(select, file = output_file, sep = '\t', quote = FALSE, col.names = TRUE, row.names = FALSE, append = TRUE)
@@ -56,7 +56,7 @@ for (i in 1:num) {
 }
 
 folder_path <- 'd:/master project/HLA detailed/'
-txt_files <- list.files(folder_path, pattern = "prostate_hla_case", full.names = TRUE)
+txt_files <- list.files(folder_path, pattern = "colon_hla_case", full.names = TRUE)
 files_merge <- 20
 merge_number <- ceiling(length(txt_files) / files_merge)
 for (i in 1:merge_number) {
@@ -65,7 +65,7 @@ for (i in 1:merge_number) {
   files_to_merge <- txt_files[start_index:end_index]
   combined_data <- lapply(files_to_merge, readLines)
   combined_data <- unlist(combined_data)
-  output_file <- file.path('d:/master project/HLA/prostate', paste0("HLA_prostate_", i, ".txt"))
+  output_file <- file.path('d:/master project/HLA/colon', paste0("HLA_colon_", i, ".txt"))
   writeLines(combined_data, con = output_file)
   cat("Group", i, "merged successfully.\n")
 }
