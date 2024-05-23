@@ -5,3 +5,5 @@ cbio-lung1.R,cbio-lung2.R,cbio-lung3.R,Colorectal Adenocarcinomat1.R,Colorectal 
 vcf_creation.R,hla.R,cbiportal vcf.R,cbiportal hla creation.R is the code for section4:creation of VCF and HLA files
 
 hla_analysis.R,therapy analysis.R is the code for section5:neoantigens prediction and analysis
+
+NeoPredPipe code.txt is the code for running prediction program in Bianca
