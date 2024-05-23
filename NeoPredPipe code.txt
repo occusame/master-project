@@ -1,0 +1,12 @@
+#!/bin/bash
+#SBATCH -J HLA-predict
+#SBATCH -A $$$
+#SBATCH -p core
+#SBATCH -n 1
+#SBATCH -t 30:00
+#SBATCH --array=xxx-xxx
+#SBATCH
+
+echo $SLURM_ARRAY_TASK_ID
+
+singularity exec -B /proj/sens2023570/Data/:/mnt /proj/sens2023570/Software/neopredpipe.sif python /src/NeoPredPipe/NeoPredPipe.py -I /mnt/VCF -H /mnt/HLA/HLA_brain_$SLURM_ARRAY_TASK_ID.txt -o /mnt/Neoantigen_calls -n HLA-brain-$SLURM_ARRAY_TASK_ID -E 8 9 10 11 -d -m
